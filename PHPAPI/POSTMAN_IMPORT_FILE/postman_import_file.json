@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "031ae672-3630-4c64-87b2-d7d415539470",
+		"name": "api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+  "item": [
+    {
+			"name": "TokenGenerator",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73739e23-fb26-474e-b202-7ea845e06c55",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var token = jsonData.document.access_token;\r",
+							"postman.setEnvironmentVariable(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-tenant",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"username\":\"admin\",\n\"password\":\"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEVServerURL}}/token/generate.php",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"token",
+						"generate.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{DEVServerURL}}/files/uploadimage.php",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"files",
+						"uploadimage.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload File",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "{{DEVServerURL}}/files/uploadfile.php",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"files",
+						"uploadfile.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read File Base64",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{DEVServerURL}}/files/readfile.php?filename=5f3ac39e317dd5f3ac39e317e1.png",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"files",
+						"readfile.php"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "5f3ac39e317dd5f3ac39e317e1.png"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FCM Notification",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"title of notification\",\r\n    \"subtitle\":\"subtitle of notification\",\r\n    \"body\":\"body of notification\",\r\n    \"iconURL\":\"https://s3.envato.com/files/298518272/80Logo.png\",\r\n    \"iconImage\":\"https://s3.envato.com/files/298518750/profileimg.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEVServerURL}}/notification/send.php",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"notification",
+						"send.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Email Notification",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"to\":\"nisgyan@gmail.com,info@getautomator.com\",\r\n    \"subject\":\"sbuject of email\",\r\n    \"body\":\"body of email\",\r\n    \"cc\":\"nishant@migids.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DEVServerURL}}/notification/sendemail.php",
+					"host": [
+						"{{DEVServerURL}}"
+					],
+					"path": [
+						"notification",
+						"sendemail.php"
+					]
+				}
+			},
+			"response": []
+		},
+    {"name": "Users - GETALL", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "GET", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","read.php?pageno=1&pagesize=30"] } }, "response": [] }
+,{"name": "Users - GETByID", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "GET", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","read_one.php?id=${id}"] } }, "response": [] }
+,{"name": "Users - Search", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "GET", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","search.php?key=abc&pageno=1&pagesize=30"] } }, "response": [] }
+,{"name": "Users - SearchByColumn", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "POST", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "[{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"},{\"columnName\":\"\",\"columnLogic\":\"LIKE\",\"columnValue\":\"\"}]", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","search_by_column.php?orAnd=OR&pageno=1&pagesize=30"] } }, "response": [] }
+,{"name": "Users - Add New", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "POST", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "{\"username\":\"\",\"slug\":\"\",\"email\":\"\",\"email_status\":\"\",\"token\":\"\",\"password\":\"\",\"role_id\":\"\",\"has_active_shop\":\"\",\"balance\":\"\",\"number_of_sales\":\"\",\"user_type\":\"\",\"facebook_id\":\"\",\"google_id\":\"\",\"vkontakte_id\":\"\",\"avatar\":\"\",\"cover_image\":\"\",\"cover_image_type\":\"\",\"banned\":\"\",\"first_name\":\"\",\"last_name\":\"\",\"shop_name\":\"\",\"about_me\":\"\",\"phone_number\":\"\",\"country_id\":\"\",\"state_id\":\"\",\"city_id\":\"\",\"address\":\"\",\"zip_code\":\"\",\"show_email\":\"\",\"show_phone\":\"\",\"show_location\":\"\",\"personal_website_url\":\"\",\"facebook_url\":\"\",\"twitter_url\":\"\",\"instagram_url\":\"\",\"pinterest_url\":\"\",\"linkedin_url\":\"\",\"vk_url\":\"\",\"youtube_url\":\"\",\"whatsapp_url\":\"\",\"telegram_url\":\"\",\"last_seen\":\"\",\"show_rss_feeds\":\"\",\"send_email_new_message\":\"\",\"is_active_shop_request\":\"\",\"vendor_documents\":\"\",\"is_membership_plan_expired\":\"\",\"is_used_free_plan\":\"\",\"created_at\":\"\"}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","create.php"] } }, "response": [] }
+,{"name": "Users - Update", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "POST", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "{\"username\":\"\",\"slug\":\"\",\"email\":\"\",\"email_status\":\"\",\"token\":\"\",\"password\":\"\",\"role_id\":\"\",\"has_active_shop\":\"\",\"balance\":\"\",\"number_of_sales\":\"\",\"user_type\":\"\",\"facebook_id\":\"\",\"google_id\":\"\",\"vkontakte_id\":\"\",\"avatar\":\"\",\"cover_image\":\"\",\"cover_image_type\":\"\",\"banned\":\"\",\"first_name\":\"\",\"last_name\":\"\",\"shop_name\":\"\",\"about_me\":\"\",\"phone_number\":\"\",\"country_id\":\"\",\"state_id\":\"\",\"city_id\":\"\",\"address\":\"\",\"zip_code\":\"\",\"show_email\":\"\",\"show_phone\":\"\",\"show_location\":\"\",\"personal_website_url\":\"\",\"facebook_url\":\"\",\"twitter_url\":\"\",\"instagram_url\":\"\",\"pinterest_url\":\"\",\"linkedin_url\":\"\",\"vk_url\":\"\",\"youtube_url\":\"\",\"whatsapp_url\":\"\",\"telegram_url\":\"\",\"last_seen\":\"\",\"show_rss_feeds\":\"\",\"send_email_new_message\":\"\",\"is_active_shop_request\":\"\",\"vendor_documents\":\"\",\"is_membership_plan_expired\":\"\",\"is_used_free_plan\":\"\",\"created_at\":\"\",\"id\":\"\"}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","update.php"] } }, "response": [] }
+,{"name": "Users - Update Patch", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "POST", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "{\"username\":\"\",\"slug\":\"\",\"email\":\"\",\"email_status\":\"\",\"token\":\"\",\"password\":\"\",\"role_id\":\"\",\"has_active_shop\":\"\",\"balance\":\"\",\"number_of_sales\":\"\",\"user_type\":\"\",\"facebook_id\":\"\",\"google_id\":\"\",\"vkontakte_id\":\"\",\"avatar\":\"\",\"cover_image\":\"\",\"cover_image_type\":\"\",\"banned\":\"\",\"first_name\":\"\",\"last_name\":\"\",\"shop_name\":\"\",\"about_me\":\"\",\"phone_number\":\"\",\"country_id\":\"\",\"state_id\":\"\",\"city_id\":\"\",\"address\":\"\",\"zip_code\":\"\",\"show_email\":\"\",\"show_phone\":\"\",\"show_location\":\"\",\"personal_website_url\":\"\",\"facebook_url\":\"\",\"twitter_url\":\"\",\"instagram_url\":\"\",\"pinterest_url\":\"\",\"linkedin_url\":\"\",\"vk_url\":\"\",\"youtube_url\":\"\",\"whatsapp_url\":\"\",\"telegram_url\":\"\",\"last_seen\":\"\",\"show_rss_feeds\":\"\",\"send_email_new_message\":\"\",\"is_active_shop_request\":\"\",\"vendor_documents\":\"\",\"is_membership_plan_expired\":\"\",\"is_used_free_plan\":\"\",\"created_at\":\"\",\"id\":\"\"}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","update_patch.php"] } }, "response": [] }
+,{"name": "Users - Delete", "request":{ "auth":{ "type": "bearer", "bearer": [ { "key": "token", "value": "{{token}}", "type": "string"}]},"method": "POST", "header": [ { "key": "Content-Type", "name": "Content-Type", "value": "application/json", "type": "text" } ], "body": { "mode": "raw", "raw": "{\"id\":\"\"}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{DEVServerURL}}", "host": [ "{{DEVServerURL}}" ], "path": ["users","delete.php"] } }, "response": [] }
+
+  ],
+	"protocolProfileBehavior": {}
+}
